@@ -82,11 +82,11 @@ def first_step(source_file, mask_file, target_file):
             for c in range(len(pred_gradient)):
                 grad_loss += mse(pred_gradient[c], gt_gradient[c])
             grad_loss /= len(pred_gradient)
-            grad_loss *= grad_weight       
+            grad_loss *= grad_weight
+            
             
             # Compute Content Loss
-            blend_obj = blend_img[:,:,int(x_start-source_img.shape[2]*0.625):int(x_start+source_img.shape[2]*0.625), 
-                                  int(y_start-source_img.shape[3]*0.5):int(y_start+source_img.shape[3]*0.5)]
+            blend_obj = blend_img[:,:,int(x_start-source_img.shape[2]*0.625):int(x_start+source_img.shape[2]*0.625), int(y_start-source_img.shape[3]*0.5):int(y_start+source_img.shape[3]*0.5)]
             source_object_features = vgg(mean_shift(source_img*mask_img))
             blend_object_features = vgg(mean_shift(blend_obj*mask_img))
             content_loss = content_weight * mse(blend_object_features.relu2_2, source_object_features.relu2_2)
